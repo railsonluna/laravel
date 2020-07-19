@@ -5,16 +5,8 @@ services:
     build: .docker/app
     container_name: app
     entrypoint: dockerize -wait tcp://mysql:3306 -timeout 40s ./.docker/app/entrypoint.sh
-#    command: bash -c "composer install --prefer-dist --no-interaction
-#      && php artisan key:generate
-#      && php artisan config:cache
-#      && php artisan config:clear
-#      && php artisan migrate
-#      && php-fpm"
 
     tty: true
-#    ports:
-#      - 9000:9000
     volumes:
       - .:/var/www
     networks:

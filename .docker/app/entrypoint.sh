@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cp .env.example .env
+
 composer install --prefer-dist --no-interaction
 php artisan key:generate
 php artisan config:cache
