@@ -24,6 +24,11 @@ services:
 
   nginx:
     build: .docker/nginx
+    working_dir: /var/www
+    entrypoint: dockerize -template ./.docker/nginx/nginx.tmpl:./.docker/nginx/default.conf  -wait tcp://app:9000 nginx
+    environment:
+      - APP_PORT=9000
+      - APP_SERVICE_NAME=app
     container_name: nginx
     restart: on-failure:5
     tty: true
