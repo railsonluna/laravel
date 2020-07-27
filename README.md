@@ -1,4 +1,4 @@
-#For run all Ecosystem Application PHP, Mysql, Nginx and Redis 
+# For run all Ecosystem Application PHP, Mysql, Nginx and Redis 
 ## Use docker-composr
 ```bash
 docker-compose up --build
@@ -13,3 +13,6 @@ docker exec -it laravel php artisan serve --host=0.0.0.0
 ```
 
 ### Acesse the system in http://localhost:8000 or http://127.0.0.1:8000/
+
+
+### Imagem Go in https://hub.docker.com/r/railsonluna/codeeducation
