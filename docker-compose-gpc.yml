@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  app:
+    build: .docker/app
+    container_name: app
+#    entrypoint: dockerize -wait tcp://mysql:3306 -timeout 40s ./.docker/app/entrypoint.sh
+
+    tty: true
+    volumes:
+      - .:/var/www
+    networks:
+      - laravel-app
+    depends_on:
+      - mysql
+      - redis
+    restart: on-failure:5
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    expose:
+      - 6379
+
+  nginx:
+    build: .docker/nginx
+    working_dir: /var/www
+    entrypoint: dockerize -template ./.docker/nginx/nginx.tmpl:./.docker/nginx/default.conf  -wait tcp://app:9000 nginx
+    environment:
+      - APP_PORT=9000
+      - APP_SERVICE_NAME=app
+    container_name: nginx
+    restart: on-failure:5
+    tty: true
+    ports:
+      - 8000:80
+    depends_on:
+      - app
+    volumes:
+      - .:/var/www
+    networks:
+      - laravel-app
+
+  mysql:
+    build: .docker/mysql
+    command: --innodb-use-native-aio=0
+    volumes:
+      - .docker/mysql/dbdata:/var/lib/mysql
+    restart: on-failure:5
+    tty: true
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=laravel
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - laravel-app
+
+networks:
+  laravel-app:
+    driver: bridge
