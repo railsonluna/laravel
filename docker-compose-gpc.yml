@@ -4,7 +4,7 @@ services:
   app:
     build: .docker/app
     container_name: app
-#    entrypoint: dockerize -wait tcp://mysql:3306 -timeout 40s ./.docker/app/entrypoint.sh
+    entrypoint: dockerize -wait tcp://mysql:3306 -timeout 40s ./.docker/app/entrypoint.sh
 
     tty: true
     volumes:
