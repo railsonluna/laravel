@@ -7,3 +7,23 @@ steps:
   - id: "Rodando docker ps"
     name: 'gcr.io/cloud-builders/docker'
     args: ['ps']
+
+  - id: "Rodando composer"
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['exec', '-t', 'app', 'composer', 'install']
+
+  - id: "Gerando .env"
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['exec', '-t', 'app', 'cp', '.env.example', '.env']
+
+  - id: "Executando key:generete"
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['exec', '-t', 'app', 'php', '/var/www/artisan', 'key:generate']
+
+  - id: "Executando migrate"
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['exec', '-t', 'app', 'php', '/var/www/artisan', 'migrate']
+
+  - id: "Executando TESTE"
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['exec', '-t', 'app', 'php', '/var/www/vendor/bin/phpunit', '-c', '/var/www/phpunit.xml']
