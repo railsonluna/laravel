@@ -10,7 +10,7 @@ steps:
 
   - id: "Rodando composer"
     name: 'gcr.io/cloud-builders/docker'
-      args: ['exec','-u','root','-t','app','chown','-R','www-data:www-data','/var/www']
+    args: ['exec','-u','root','-t','app','chown','-R','www-data:www-data','/var/www']
 
   - id: "Gerando .env"
     name: 'gcr.io/cloud-builders/docker'
