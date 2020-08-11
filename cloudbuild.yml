@@ -1,7 +1,7 @@
 steps:
 
   - id: "Rodando docker-compose"
-    name: 'gcr.io/$PROJECT_ID/docker-compose:1.24.0'
+    name: 'gcr.io/$PROJECT_ID/docker-compose'
     args: ['-f', 'docker-compose-gpc.yml', 'up', '-d']
 
   - id: "Rodando docker ps"
@@ -22,7 +22,7 @@ steps:
 
   - id: "Executando key:generete"
     name: 'gcr.io/cloud-builders/docker'
-    args: ['exec', '-t', 'app', 'php', '/var/www/artisan', 'key:generate']
+    args: ['exec', '-t', 'app', 'php', 'key:generate']
 
   - id: "Executando migrate"
     name: 'gcr.io/cloud-builders/docker'
